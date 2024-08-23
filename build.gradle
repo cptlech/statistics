@@ -1,0 +1,52 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.2'
+	id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.statistics'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.apache.commons:commons-lang3'
+	implementation 'org.hibernate.validator:hibernate-validator'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+	useJUnitPlatform {
+		excludeTags 'performance'
+	}
+	minHeapSize = "6g"
+	maxHeapSize = "9g"
+}
+
+def performance= tasks.register("performance", Test) {
+	useJUnitPlatform {
+		includeTags "performance"
+	}
+	testLogging.showStandardStreams = true
+	minHeapSize = "2g"
+	maxHeapSize = "2g"
+}
+
+bootRun {
+	jvmArgs([
+			"-Xms20g",
+			"-Xmx20g"
+	])
+}
