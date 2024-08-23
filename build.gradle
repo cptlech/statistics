@@ -31,8 +31,8 @@ test {
 	useJUnitPlatform {
 		excludeTags 'performance'
 	}
-	minHeapSize = "6g"
-	maxHeapSize = "9g"
+	minHeapSize = "16g"
+	maxHeapSize = "16g"
 }
 
 def performance= tasks.register("performance", Test) {
